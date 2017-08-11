@@ -7,5 +7,5 @@ def get_median(list_of_numbers):
         middle = (list_of_numbers[len(list_of_numbers) // 2] + list_of_numbers[len(list_of_numbers) // 2-1 ]) /2
 
     return middle
-
+print"woalahhh"
 print(get_median(list_of_numbers))
