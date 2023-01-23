@@ -1,0 +1,150 @@
+Declaimer:
+
+
+All environment-specific application-related property values(britebill.properties, tmo-application.yml, etc) needs to be updated  via environment variables. 
+So we are moving all  variable for BriteBill properties,  from configure.sh to the  techops-env-variables.sh file.
+
+S2 build: 1.ci.2446.1
+
+
+
+Ticket - ID
+
+Project Status:
+
+QA -  Done
+UAT16 - Done
+UAT -  Pending
+Staging - Pending
+Prod  - Pending
+DR  - Pending
+
+Content of the Techops-env-variable.sh file
+
+There is slight difference between techops-env-variables.sh file which is used by standalone env and for the  prod like env with ASG.
+
+Following is example of SA env, specifically of QA01. 
+These BB-properties lines should be added to the bottom of the file. (Some of the Env specific values needs be changed accordingly to the env)  
+
+################## BB-Properties ############################
+
+export BB_DYNAMO_DB_PREFIX="tmo_qa01"
+export BB_BENEFITS_SG_REPORTNOTIFICATION_TO="swaroop.pattanaik@britebill.com"
+export BB_BENEFITS_TMOT_REPORTNOTIFICATION_TO="swaroop.pattanaik@britebill.com"
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_EMAIL_NOTIFICATION_TONAME="swaroop.pattanaik@britebill.com"
+export BB_INSEEGOFEED_EMAIL="swaroop.pattanaik@britebill.com"
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_EMAIL_NOTIFICATION_FROMADRESS="test@britebill.com"
+export BB_INTEGRATION_BILLRUN_QUALIFIED_CONSUMER_EMAIL_NOTIFICATION_FROMADRESS="test@britebill.com"
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_EMAIL_NOTIFICATION_SMTPHOST="email-smtp.eu-west-1.amazonaws.com"
+export BB_INTEGRATION_BILLRUN_QUALIFIED_CONSUMER_EMAIL_NOTIFICATION_SMTPHOST="email-smtp.eu-west-1.amazonaws.com"
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_EMAIL_NOTIFICATION_SMTP_PASSWORD=`aws secretsmanager get-secret-value --secret-id tmo/qa --region eu-west-1 --version-stage AWSCURRENT | jq --raw-output .SecretString | jq -r ."qatmo_mail_pass_encrypted"`
+export BB_INTEGRATION_BILLRUN_QUALIFIED_CONSUMER_EMAIL_NOTIFICATION_SMTP_PASSWORD=`aws secretsmanager get-secret-value --secret-id tmo/qa --region eu-west-1 --version-stage AWSCURRENT | jq --raw-output .SecretString | jq -r ."qatmo_mail_pass_encrypted"`
+export BB_IOT_ALERT_REPORT="AmdocsBriteBillTesting@T-Mobile.com"
+export BB_AMAZON_EMAIL_REGION="eu-west-1"
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_EMAIL_NOTIFICATION_SMTP_PORT="25"
+export BB_INTEGRATION_BILLRUN_QUALIFIED_CONSUMER_EMAIL_NOTIFICATION_SMTP_PORT="25"
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_EMAIL_NOTIFICATION_SMTP_USER_NAME=`aws secretsmanager get-secret-value --secret-id tmo/qa --region eu-west-1 --version-stage AWSCURRENT | jq --raw-output .SecretString | jq -r ."qatmo_mail_id"`
+export BB_INTEGRATION_BILLRUN_QUALIFIED_CONSUMER_EMAIL_NOTIFICATION_SMTP_USERNAME=`aws secretsmanager get-secret-value --secret-id tmo/qa --region eu-west-1 --version-stage AWSCURRENT | jq --raw-output .SecretString | jq -r ."qatmo_mail_id"`
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_EMAIL_NOTIFICATION_TRANSPORT=""
+export BB_INTEGRATION_BILLRUN_QUALIFIED_CONSUMER_EMAIL_NOTIFICATION_TRANSPORT=""
+export BB_INTEGRATION_BILLRUN_QUALIFIED_CONSUMER_EMAIL_NOTIFICATION_FROMNAME="Reporting Notifications"
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_EMAIL_NOTIFICATION_FROMNAME="Bill Notifications"
+export BB_DOCSTORE_AWS_BUCKET_NAME="bb-tmo-docstore-qa"
+export BB_DOCSTORE_AWS_ACCESSKEY=""
+export BB_DOCSTORE_AWS_SECRETKEY=""
+export BB_DOCSTORE_AWS_COMPRESS_TYPE="PDF,XML"
+export BB_DOCSTORE_AWS_ENCRYPT_TYPE="EU_WEST_1"
+export BB_AMAZON_ROOT_DIR="qa01tmo"
+export BB_SI_CONSOLIDATION="TST"
+export BB_CONSOLIDATION_SUMMARY_PHONE="678-467-9660"
+export BB_AMAZON_BUCKETNAME="bb-tmo-docstore-qa"
+export BB_AMAZON_ACCESSKEY=""
+export BB_AMAZON_SECRETKEY=""
+export BB_AMAZON_COMPRESSS_TYPE="PDF,XML"
+export BB_AMAZON_ENCRYPT_TYPE="PDF,XML"
+export BB_DATASTORE_FILESYSTEM_CONTENT_TYPES="AFP,TEXT_PLAIN,RAW"
+export BB_DATASTORE_AMAZON_CONTENT_TYPES="PDF,XML,HTML"
+export BB_ADMINISTRATOR_EMAILS="test@britebill.com"
+export BB_CONSOLIDATION_AFP_NOTIFICATIONS_TO="test@britebill.com"
+export BB_CONSOLIDATION_VALIDATION_NOTIFICATIONS_TO="test@britebill.com"
+export BB_CONSOLIDATION_AFP_SUMMARY_NOTIFICATION_SUBJECT="AFP Summary Notification for"
+export BB_CONSOLIDATION_REPRINT_NOTIFICATIONS_SUBJECT="Reprint AFP files Notification"
+export BB_PROCESSING_EXECUTOR_CORE_POOL_SIZE=8
+export BB_PROCESSING_EXECUTOR_MAX_POOL_SIZE=12
+export BB_PROCESSING_POLAR_MAX_MESSAGES_PER_POLL=8
+export BB_CORE_DATASOURCE_MAXACTIVE=30
+export BB_BENEFITS_AMAZON_S3=true
+export BB_BENEFITS_AMAZON_BUCKET_NAME="bb-tmo-benefits-qa/qa01tmo"
+export BB_BENEFITS_AMAZON_ACCESSKEY=""
+export BB_BENEFITS_AMAZON_SECTRETKEY=""
+export BB_BENEFITS_AMAZON_MAX_CONNECTIONS=500
+export BB_BENEFITS_AMAZON_REGION_NAME=EU_WEST_1
+export BB_TUESDAY_ERROR_EMAIL_TO="AmdocsBriteBillTesting@t-mobile.com"
+export BB_MIGRATION_METADATA_AMAZON_BUCKETNAME="bb-tmo-archival-docs/qa01tmo"
+export BB_MIGRATION_METADATA_AMAZON_REGION_NAME=EU_WEST_1
+export BB_MIGRATION_METADATA_AMAZON_AWSACCESSKEY=""
+export BB_MIGRATION_METADATA_AMAZON_AWSSECRETKEY=""
+export BB_DATASTORE_FILESYSTEM_ARCHIVING="/data/britebill/archive/datastore"
+export BB_MAX_NUMBER_ATTEMPTS_RUN_BILLRUN=3
+export BB_INTEGRATION_BILLRUN_MIGRATION_CLUSTER_CONFIGURATION_PREFETCH=10
+export BB_INTEGRATION_BILLRUN_MIGRATION_CLUSTER_CONFIGURATION_BATCH_MIGRATED_PREFETCH=5
+export BB_INTEGRATION_BILLRUN_MAINTENANCE_MIGRATION_THREAD_NUMBER=8
+export BB_AMAZON_DYNAMO_REGION="EU_WEST_1"
+
+
+
+For the  prod like environments, (e.g QA04, UAT3, UAT16 and etc.),  we are adding additional Global hook  if statement  
+lines in the beginning of the techops file. as long with  BB-properties  mentioned above, in the bottom of the file.
+
+############################Global Hook variable
+export BB_SPRING_PROFILES_ACTIVE="pdf-background-cluster,qualified-content-cluster,billrun-deletion,pdf-background-process,ingest-billrun-process,ingest-fragment-process,consolidation-process,confirmation-process,reprint-process,tmo-tuesdays-process,reject-file-process,tmo-tuesdays-fragment-process,braille-process,reconsolidation-process,ab-testing-report-consolidation,pdf-request,pdf-multicycle-request,iot,finco,inseego-confirmation-process,inseego-eod-process,smart-call-deflect-process,large-ban-queue-message-processing,benefits-reconciliation"
+export instance_tag=$(grep -oP '(?<=ec2_tag_Asg-type=).*' /var/lib/facts/ec2_tags.txt)
+
+if [ "$instance_tag" == "si-tmot" ]; then
+    export BB_SPRING_PROFILES_ACTIVE=$BB_SPRING_PROFILES_ACTIVE_TMOT
+    export BB_INTEGRATION_BILLRUN_DELETION_WORKFLOW_ENABLED=false
+    export BB_INTEGRATION_BILLRUN_MAINTENANCE_WORKFLOW_ENABLED=false
+    export BB_AB_TESTING_CONSOLIDATION_REPORTS=false
+    export BB_BRAILLEPRINT_EOD_WORKFLOW=false
+    export BB_IOTPDFPUSH_EOD_WORKFLOW=false
+    export BB_IOTPDFPUSH_EOM_WORKFLOW=false
+    export BB_BENEFITS_RECON_WORKFLOW=false
+    export BB_INSEEGO_EOD_WORKFLOW=false
+elif [ "$instance_tag" == "si-cnf" ]; then
+    export BB_SPRING_PROFILES_ACTIVE=$BB_SPRING_PROFILES_ACTIVE_CNF
+    export BB_BENFITS_CONFIRMATION_NUMBEROFTHREADS=$BB_BENFITS_CONFIRMATION_NUMBEROFTHREADS_CNF
+        export BB_INTEGRATION_BILLRUN_DELETION_WORKFLOW_ENABLED=false
+        export BB_INTEGRATION_BILLRUN_MAINTENANCE_WORKFLOW_ENABLED=false
+        export BB_AB_TESTING_CONSOLIDATION_REPORTS=false
+        export BB_BRAILLEPRINT_EOD_WORKFLOW=false
+        export BB_IOTPDFPUSH_EOD_WORKFLOW=false
+        export BB_IOTPDFPUSH_EOM_WORKFLOW=false
+        export BB_BENEFITS_RECON_WORKFLOW=false
+        export BB_INSEEGO_EOD_WORKFLOW=false
+elif [ "$instance_tag" == "si-ingest" ]; then
+    export BB_SPRING_PROFILES_ACTIVE=$BB_SPRING_PROFILES_ACTIVE_INGEST
+        export BB_INTEGRATION_BILLRUN_DELETION_WORKFLOW_ENABLED=false
+        export BB_INTEGRATION_BILLRUN_MAINTENANCE_WORKFLOW_ENABLED=false
+        export BB_AB_TESTING_CONSOLIDATION_REPORTS=false
+        export BB_BRAILLEPRINT_EOD_WORKFLOW=false
+        export BB_IOTPDFPUSH_EOD_WORKFLOW=false
+        export BB_IOTPDFPUSH_EOM_WORKFLOW=false
+        export BB_BENEFITS_RECON_WORKFLOW=false
+        export BB_INSEEGO_EOD_WORKFLOW=false
+fi
+
+
+
+More details about IF statement and why we are using it. 
+
+For prod like environments, we have some variables which need to be assigned based on the AWS instance tags, whether is  TMOT, Ingest or CNF. 
+
+1. BB_SPRING_PROFILES_ACTIVE  variable in general is set by env-variable.sh file, but in some cases like for ASG statics node,
+it has different values so we are overriding this value with techops file. 
+
+2. We are also changing BB_SPRING_PROFILES_ACTIVE  for ASG dynamic node based on ec2_tag_Asg-type tag. 
+Variables like: $BB_SPRING_PROFILES_ACTIVE_TMOT; BB_SPRING_PROFILES_ACTIVE_CNF; BB_SPRING_PROFILES_ACTIVE_INGEST 
+are declared in env-variable.sh 
+
+Rest of the variables by default are set to “True” in env-variables.sh, but for ASG nodes it needs to be set to False and we are overriding 
+it with techops-environment.sh file.
